@@ -1,0 +1,524 @@
+@import "vars";
+
+#main_page {
+  display: flex;
+  justify-content: center;
+}
+
+#left {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  max-width: 275px;
+  padding: 0 0.75rem 0.75rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+
+  //
+  //
+  // LIST OF LINKS (TOP PART)
+  & a:not(.logo) {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: $round_radius;
+    transition: background 0.3s;
+    margin-bottom: 0.3rem;
+    &:hover {
+      background: $tint-light;
+    }
+  }
+  & svg {
+    width: 26px;
+  }
+  & .logo svg {
+    fill: $blue;
+    width: 54px;
+    padding: 0.75rem;
+    border-radius: 100%;
+    transition: background 0.3s;
+    &:hover {
+      background: $blue_light;
+    }
+  }
+  & p {
+    font-size: 1.25rem;
+    margin: 0 1.25rem;
+  }
+  & .current {
+    font-weight: 700;
+  }
+  & svg:nth-child(2),
+  & .current svg:nth-child(1) {
+    display: none;
+  }
+  & .current svg:nth-child(2) {
+    display: block;
+  }
+  & button {
+    margin-top: 0.75rem;
+    font-weight: 700;
+    background: $blue;
+    padding: 1rem 5.4rem;
+    font-size: 1.06rem;
+    color: white;
+    border-radius: $round_radius;
+    box-shadow: $main-shadow;
+    transition: background 0.3s;
+    &:hover {
+      background: $blue_dark;
+    }
+    & svg {
+      fill: white;
+      display: none;
+    }
+  }
+
+  //
+  //
+  // USER BUTTON (BOTTOM PART)
+  & .user {
+    border-radius: $round_radius;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    &:hover {
+      background: $tint-light;
+    }
+
+    & .user_icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $blue;
+      border-radius: $round_radius;
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+
+    & .name {
+      font-size: 0.93rem;
+      font-weight: 700;
+    }
+    & .tag {
+      font-size: 0.93rem;
+      color: $placeholder;
+      margin-top: 0.1rem;
+    }
+
+    & span {
+      font-size: 1.25rem;
+      color: $placeholder;
+    }
+  }
+}
+
+@media only screen and (max-width: 1260px) {
+  #left {
+    width: auto;
+    & li {
+      width: auto;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+    & li p {
+      display: none;
+    }
+    & button {
+      padding: 0;
+      width: 3.125rem;
+      height: 3.125rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & span {
+        display: none;
+      }
+      & svg {
+        display: block;
+      }
+    }
+    & .user {
+      width: 100%;
+      padding: 10px;
+    }
+    & .user *:not(.user_icon) {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 1010px) {
+  #left {
+    padding: 0 0.25rem 0.75rem 0.25rem;
+  }
+}
+
+#center {
+  width: 598px;
+  min-height: 100vh;
+  border-left: 1px solid $tint;
+  border-right: 1px solid $tint;
+
+  & #feed {
+    height: 100%;
+  }
+
+  & header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 5;
+  }
+  & h1 {
+    font-size: 1.25rem;
+    padding: 1rem;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  #center {
+    max-width: 598px;
+  }
+}
+@media only screen and (max-width: 988px) {
+  #center {
+    margin-right: 68px;
+  }
+}
+
+#right {
+  width: 350px;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+
+  //
+  //
+  // SEARCH BAR
+  & form {
+    background: white;
+    position: sticky;
+    top: 0;
+    padding: 0.3rem 0;
+  }
+  & label {
+    width: 100%;
+    display: flex;
+    background: $tint_blue;
+    border-radius: $round_radius;
+    position: relative;
+  }
+  & svg {
+    width: 1.1rem;
+    left: 1rem;
+    top: 0.65rem;
+    fill: $placeholder;
+    position: absolute;
+  }
+  & input {
+    font-size: 0.9rem;
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 3.25rem;
+    background: $tint_blue;
+    outline: 1px solid $tint_blue;
+    border-radius: $round_radius;
+    &::placeholder {
+      color: $placeholder;
+    }
+    &:focus {
+      outline: 1px solid $blue;
+      background: white;
+    }
+    &:focus ~ svg {
+      fill: $blue;
+    }
+  }
+
+  //
+  //
+  // SIGN IN OR UP SECTION
+  & #sign_up_or_in {
+    padding: 0.75rem 1rem;
+    border: 1px solid $tint;
+    border-radius: $form_radius;
+    margin-top: 0.7rem;
+    & p {
+      color: $placeholder;
+      font-size: 0.81rem;
+      margin-top: 0.75rem;
+    }
+    & h2 {
+      font-size: 1.25rem;
+    }
+    & button {
+      font-weight: 700;
+      margin-top: 0.75rem;
+      border: 1px solid $tint-dark;
+      padding: 0.7rem;
+      width: 300px;
+      border-radius: $round_radius;
+      transition: background 0.3s;
+      &:hover {
+        background: $tint;
+      }
+    }
+  }
+
+  //
+  //
+  // TRENDS + WHO TO FOLLOW (GENERALS)
+  & ul {
+    margin-top: 1rem;
+    border-radius: $form_radius;
+    background: $tint_blue;
+    overflow: hidden;
+  }
+  & ul h2 {
+    font-size: 1.25rem;
+    padding: 0.75rem 1rem;
+  }
+  & li,
+  & .more_btn {
+    padding: 0.75rem 1rem;
+    transition: background 0.2s;
+    cursor: pointer;
+    &:hover {
+      background: $tint;
+    }
+  }
+  & .more_btn {
+    width: 100%;
+    color: $blue;
+    text-align: left;
+    padding: 1rem;
+  }
+
+  //
+  //
+  // TRENDS
+  #trends p:not(.topic) {
+    font-size: 0.81rem;
+    color: $placeholder;
+  }
+  #trends .topic {
+    font-weight: 700;
+    margin: 0.35rem 0;
+  }
+
+  //
+  //
+  // FOLLOW
+  #follow {
+    & li {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    & .user_icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: $blue;
+      margin-right: 0.75rem;
+      font-size: 1.3rem;
+      color: white;
+    }
+    & .name {
+      font-weight: 700;
+    }
+    & .tag {
+      margin-top: 0.1rem;
+      color: $placeholder;
+    }
+    & .follow_btn {
+      position: absolute;
+      right: 1rem;
+      color: white;
+      font-weight: 700;
+      background: black;
+      border-radius: $round_radius;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  #right {
+    width: 288px;
+    margin-left: 1.25rem;
+    & #sign_up_or_in button {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-width: 988px) {
+  #right {
+    display: none;
+  }
+}
+
+//
+//
+// CREATE tweeb FORM
+.create_tweeb_form {
+  display: flex;
+  padding: 0 1rem;
+
+  & .container {
+    flex: 1;
+  }
+
+  // ACTION BAR (BOTTOM BAR)
+  & input {
+    display: none;
+  }
+  & .action_bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid $tint-light;
+    padding: 0.75rem 0;
+
+    & label {
+      width: 2.18rem;
+      height: 2.18rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: $round_radius;
+      transition: background 0.3s;
+      &:hover {
+        background: $blue_light;
+      }
+    }
+  }
+  & svg {
+    width: 1.25rem;
+    fill: $blue;
+  }
+  & button {
+    background: $blue;
+    color: white;
+    font-weight: 700;
+    border-radius: $round_radius;
+    padding: 0.6rem 0.9rem;
+  }
+
+  // USER ICON
+  & .user_icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: $round_radius;
+    background: $blue;
+    margin-right: 0.75rem;
+  }
+
+  // tweeb TEXT
+  & label {
+    position: relative;
+    display: block;
+    padding: 1.1rem 0;
+  }
+  & textarea {
+    display: block;
+    width: 100%;
+    font-size: 1.25rem;
+    overflow: hidden;
+    &:focus ~ .counter {
+      display: block;
+    }
+  }
+  & .counter {
+    font-size: 0.81rem;
+    color: $placeholder;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &:invalid {
+    & button {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+  }
+}
+
+//
+//
+// tweeb
+.tweeb {
+  border-top: 1px solid $tint-light;
+  display: flex;
+  padding: 0.75rem 1rem 0;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: 1px solid $tint-light;
+  }
+
+  &:hover {
+    background: $tint_blue;
+  }
+
+  & .container {
+    flex: 1;
+  }
+  & .user_icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: $round_radius;
+    background: $blue;
+    margin-right: 0.75rem;
+  }
+  & .user_info {
+    display: flex;
+    & * {
+      margin-right: 0.3rem;
+      color: $placeholder;
+    }
+
+    & .name {
+      font-weight: 700;
+      color: black;
+    }
+  }
+  & .tweeb_text {
+    line-height: 1.2;
+    margin-top: 0.3rem;
+  }
+
+  & .action_bar {
+    margin: 0.3rem 0;
+  }
+
+  & button {
+    width: 2.18rem;
+    height: 2.18rem;
+    padding: 0.5rem;
+    border-radius: $round_radius;
+    transition: background 0.3s;
+    &:hover {
+      background: $blue_light;
+      & svg {
+        fill: $blue;
+      }
+    }
+  }
+  & svg {
+    transition: fill 0.3s;
+    fill: $placeholder;
+  }
+}

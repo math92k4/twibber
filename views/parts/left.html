@@ -1,0 +1,63 @@
+<div id="left">
+  <ul>
+    <li>
+      <a href="/home" class="logo">
+        <!--  -->
+        % include("assets/icons/logo.svg")
+        <!--  -->
+      </a>
+    </li>
+    <li>
+      <a href="/home" class="home current">
+        <!--  -->
+        % include("assets/icons/slim/home.svg")
+        <!--  -->
+        % include("assets/icons/bold/home.svg")
+        <p>Home</p>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        % include("assets/icons/slim/hashtag.svg")
+        <p>Explore</p>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        % include("assets/icons/slim/bell.svg")
+        <p>Notifications</p>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        % include("assets/icons/slim/message.svg")
+        <p>Messages</p>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        % include("assets/icons/slim/user.svg")
+        <p>Profile</p>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        % include("assets/icons/slim/dots.svg")
+        <p>More</p>
+      </a>
+    </li>
+    <li><button onclick="spa('/compose/tweeb', 'body')" >
+      % include("assets/icons/tweeb.svg") 
+      <span>Tweeb</span>
+    </button></li>
+  </ul>
+
+  <div class="user">
+    <div class="user_icon">M</div>
+    <div class="user_info">
+      <p class="name">Mathias Jensen</p>
+      <p class="tag">@MathiasJensen</p>
+    </div>
+    <span>···</span>
+  </div>
+</div>

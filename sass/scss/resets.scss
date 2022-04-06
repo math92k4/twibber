@@ -1,0 +1,44 @@
+@import "vars";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+}
+textarea {
+  border: none;
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+  resize: none;
+}
+button {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+img {
+  width: 100%;
+}
+li {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+::placeholder {
+  color: $placeholder;
+}

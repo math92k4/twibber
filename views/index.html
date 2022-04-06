@@ -1,0 +1,41 @@
+% if not is_xhr:
+  % include("head")
+%end
+
+
+
+% if modal:
+  % include(f"{modal}")
+% end
+
+
+
+% if not is_xhr:
+  <main id="index_page" data-spa_url="/" data-spa_type="main" data-page_title="Welcome to Twibber">
+    <div class="left">
+      <img src="/assets/images/bg.png" alt="Background image" />
+      <div class="logo_left">
+        <!--  -->
+        % include("assets/icons/logo.svg")
+        <!--  -->
+      </div>
+    </div>
+    <section class="right">
+      <div class="container">
+        <div class="logo_right">
+          <!--  -->
+          % include("assets/icons/logo.svg")
+          <!--  -->
+        </div>
+        <h1>Happening now</h1>
+        <h2>Join Twibber today.</h2>
+        <button class="sign_up_btn" onclick="spa('/sign-up', 'body')">Sign up</button>
+        <p class="disclaimer">This is a school project. Please don't use your private email or usual password. The email does not need to be valid.</p>
+        <p>Already have an account?</p>
+        <button class="sign_in_btn" onclick="spa('/sign-in', 'body')">Sign in</button>
+      </div>
+    </section>
+  </main>
+
+  % include("footer")
+%end

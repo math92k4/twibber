@@ -1,0 +1,164 @@
+@import "vars.scss";
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  display: flex;
+
+  & .top {
+    grid-template-columns: 1fr;
+    display: flex;
+    margin: 0.5rem;
+    position: relative;
+  }
+  & .x {
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0.5rem;
+    border-radius: 100%;
+    transition: background 0.2s;
+
+    cursor: pointer;
+    &:hover {
+      background: $tint-light;
+    }
+    & svg {
+      fill: $placeholder;
+    }
+  }
+  & .form_logo {
+    width: 30px;
+    height: 25px;
+    align-self: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    & svg {
+      fill: $blue;
+    }
+  }
+
+  & > * {
+    width: 100%;
+    max-width: 600px;
+    border-radius: $form_radius;
+    background-color: white;
+  }
+}
+
+#compose_tweeb_modal {
+  & > * {
+    position: absolute;
+    top: 5vh;
+  }
+}
+
+#sign_up_form,
+#sign_in_form {
+  & .form_grid {
+    display: grid;
+    padding: 1rem 2rem 2rem 2rem;
+    gap: 1.5rem;
+  }
+
+  & h2 {
+    font-size: 2rem;
+    margin: 0.5rem 0;
+  }
+  & label {
+    position: relative;
+    display: grid;
+  }
+  & label div {
+    position: absolute;
+    top: 0.5rem;
+  }
+  & .placeholder {
+    left: 0.5rem;
+    font-size: 0.93rem;
+    transform-origin: top left;
+    transform: translateY(0.7rem);
+    transition: transform 0.2s;
+    color: $placeholder;
+  }
+  & .counter {
+    right: 0.5rem;
+    font-size: 0.81rem;
+    display: none;
+    color: $placeholder;
+  }
+  & input {
+    border: 1px solid $tint-dark;
+    border-radius: $input_radius;
+    place-self: end;
+    width: 100%;
+    padding: 1.7rem 0.5rem 0.5rem 0.5rem;
+    font-size: inherit;
+  }
+  & input:focus {
+    outline: 2px solid $blue;
+    border: 1px solid transparent;
+  }
+  & input:focus ~ .counter {
+    display: block;
+  }
+  & input:focus + .placeholder {
+    color: $blue;
+  }
+  & input:focus + .placeholder,
+  & input:not(:placeholder-shown) + .placeholder {
+    transform: scale(0.81);
+  }
+  & input:invalid:not(:placeholder-shown):not(:focus),
+  &.error input:invalid:not(:focus) {
+    border: 1px solid red;
+  }
+  & .error_message {
+    display: none;
+    color: red;
+    font-size: 0.82rem;
+    margin-top: 0.2rem;
+  }
+  & input:invalid:not(:placeholder-shown):not(:focus) ~ .error_message,
+  &.error input:invalid ~ .error_message {
+    display: block;
+  }
+
+  & .requirements {
+    color: $placeholder;
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
+    max-width: 60ch;
+  }
+  & input:invalid:not(:placeholder-shown):not(:focus) ~ .requirements,
+  &.error input:invalid ~ .requirements {
+    color: red;
+  }
+
+  & button {
+    color: white;
+    font-weight: 700;
+    padding: 0.8rem;
+    border-radius: $round_radius;
+    background: black;
+    margin-top: 2rem;
+    transition: box-shadow 0.3s;
+    box-shadow: $main-shadow;
+  }
+  & button:hover,
+  & button:focus {
+    opacity: 0.85;
+  }
+  &:invalid button {
+    opacity: 0.4;
+    pointer-events: none;
+    box-shadow: none;
+  }
+}

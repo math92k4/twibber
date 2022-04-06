@@ -1,0 +1,28 @@
+<form class="create_tweeb_form">
+  <div class="user_icon"></div>
+  <div class="container">
+    <label>
+      <textarea
+        oninput="validateTextArea()"
+        name="tweeb_text"
+        rows="{{ rows }}"
+        minlength="1"
+        maxlength="100"
+        required
+        placeholder="What's happening?"
+      ></textarea>
+      <div class="counter"><span>0</span>/100</div>
+    </label>
+    <div class="action_bar">
+      <div>
+        <label>
+          <!--  -->
+          % include("assets/icons/add_image.svg")
+          <!--  -->
+          <input type="file" name="tweeb_image" />
+        </label>
+      </div>
+      <button onclick="formValidation( postTweeb() )">Tweeb</button>
+    </div>
+  </div>
+</form>

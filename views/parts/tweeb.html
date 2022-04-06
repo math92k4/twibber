@@ -1,0 +1,18 @@
+<form class="tweeb">
+  <input type="text" name="tweeb_id" hidden value="{{ tweeb['tweeb_id'] }}">
+  <div class="user_icon"></div>
+  <div class="container">
+    <div class="user_info">
+      <p class="name">{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}</p>
+      <p class="tag">@{{ tweeb["fk_user_id"] }}</p>
+      <span>·</span>
+      <p class="tweebed_ago">5m</p>
+    </div>
+    <p class="tweeb_text">{{ tweeb["tweeb_text"] }}</p>
+    <div class="action_bar">
+      <button>
+        % include("assets/icons/heart.svg")
+      </button>
+    </div>
+  </div>
+</form>

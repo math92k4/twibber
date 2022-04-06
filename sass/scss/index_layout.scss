@@ -1,0 +1,82 @@
+@import "vars";
+
+#index_page {
+  display: flex;
+  height: 100vh;
+
+  & .left {
+    width: 54%;
+    height: 100%;
+    position: relative;
+  }
+  & img {
+    object-fit: cover;
+    height: 100%;
+  }
+  & .logo_left {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    fill: white;
+  }
+  & .right {
+    width: 46%;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+  & .container {
+    padding: 1rem;
+  }
+  & .logo_right {
+    width: 43px;
+    height: 35px;
+    fill: $blue;
+  }
+  & h1 {
+    font-size: 3.7rem;
+    margin-top: 4rem;
+  }
+  & h2 {
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+  & p:not(.disclaimer) {
+    font-weight: 700;
+    margin-top: 4rem;
+  }
+  & .disclaimer {
+    font-size: 0.75rem;
+    max-width: 60ch;
+    margin-top: 0.3rem;
+    color: $placeholder;
+  }
+  & .sign_in_btn,
+  & .sign_up_btn {
+    width: 300px;
+    padding: 0.7rem;
+    font-weight: 700;
+    border-radius: $round_radius;
+  }
+  & .sign_up_btn {
+    background: $blue;
+    color: white;
+    margin-top: 1.5rem;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  & .sign_in_btn {
+    border: 1px solid $tint-dark;
+    color: $blue;
+    margin-top: 1rem;
+    transition: background 0.2s;
+    &:hover {
+      background: $blue_light;
+    }
+  }
+}

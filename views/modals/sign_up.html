@@ -1,0 +1,47 @@
+<div id="sign_up_modal" class="modal" data-spa_type="modal" data-spa_url="/sign-up" data-spa_url_origin="/">
+  <form id="sign_up_form">
+    <div class="top">
+      <div class="x" onclick="closeSpaModal()">
+
+        % include("assets/icons/x.svg")
+
+      </div>
+      <div class="form_logo">
+
+        % include("assets/icons/logo.svg")
+
+      </div>
+    </div>
+    <div class="form_grid">
+      <h2>Sign up</h2>
+      <label>
+        <input name="user_first_name" type="text" minlength="2" maxlength="20" placeholder=" " required oninput="countInputLength()" />
+        <div class="placeholder">First name</div>
+        <div class="counter"><span>0</span>/20</div>
+        <p class="error_message">Please enter a valid first name</p>
+      </label>
+
+      <label>
+        <input name="user_last_name" type="text" minlength="2" maxlength="20" placeholder=" " required oninput="countInputLength()" />
+        <div class="placeholder">Last name</div>
+        <div class="counter"><span>0</span>/20</div>
+        <p class="error_message">Please enter a valid last name</p>
+      </label>
+
+      <label>
+        <input name="user_email" type="email" placeholder=" " required />
+        <div class="placeholder">Email</div>
+        <p class="error_message">Please enter a valid email</p>
+      </label>
+
+      <label>
+        <input name="user_password" type="password" placeholder=" " pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}" required />
+        <div class="placeholder">Password</div>
+        <p class="requirements">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.</p>
+      </label>
+
+      <button onclick="formValidation()">Sign up</button>
+    </div>
+  </form>
+</div>
+

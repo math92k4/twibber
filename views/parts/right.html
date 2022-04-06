@@ -1,0 +1,85 @@
+<div id="right">
+  <form>
+    <label for="search">
+      <input type="text" id="search" placeholder="Search Twibber" />
+      % include("assets/icons/search.svg")
+    </label>
+  </form>
+
+  <div id="blocks">
+    <!-- Sign up or sign in -->
+    <div id="sign_up_or_in">
+      <h2>New on Twibber?</h2>
+      <p>Sign up now and get own personal timeline!</p>
+      <button onclick="spa('/sign-up', 'body')">Sign up via e-mail</button>
+      <button onclick="spa('/sign-in', 'body')">Sign in</button>
+      <p>This is a school project. Please don't use your private email or usual password.</p>
+    </div>
+
+    <!-- Trends list -->
+    <ul id="trends">
+      <h2>Trends for you</h2>
+      <li>
+        <p class="trend_in">Trending in WebDev</p>
+        <p class="topic">#Bottle</p>
+        <p class="tweebs">2,431 tweebs</p>
+      </li>
+      <li>
+        <p class="trend_in">Trending in Randers</p>
+        <p class="topic">#NikeAirMax</p>
+        <p class="tweebs">4,242 tweebs</p>
+      </li>
+      <li>
+        <p class="trend_in">KEA · Trending</p>
+        <p class="topic">Cheap coffee please..</p>
+        <p class="tweebs">1,242 tweebs</p>
+      </li>
+      <li>
+        <p class="trend_in">Trending in db</p>
+        <p class="topic">utf8mb4</p>
+        <p class="tweebs">1,122 tweebs</p>
+      </li>
+      <li>
+        <p class="trend_in">Developer · Trending</p>
+        <p class="topic">#mycatdidthisOMG</p>
+        <p class="tweebs">5,156 tweebs</p>
+      </li>
+      <li>
+        <p class="trend_in">Developer · Trending</p>
+        <p class="topic">How to center a div?</p>
+        <p class="tweebs">2,322 tweebs</p>
+      </li>
+      <button class="more_btn">Show more</button>
+    </ul>
+
+    <!-- Who to follow list -->
+    <ul id="follow">
+      <h2>Who to follow</h2>
+      <li>
+        <div class="user_icon">P</div>
+        <div>
+          <p class="name">Python</p>
+          <p class="tag">@python</p>
+        </div>
+        <button class="follow_btn">Follow</button>
+      </li>
+      <li>
+        <div class="user_icon">M</div>
+        <div>
+          <p class="name">Mathias Jensen</p>
+          <p class="tag">@mathiasjensen</p>
+        </div>
+        <button class="follow_btn">Follow</button>
+      </li>
+      <li>
+        <div class="user_icon">E</div>
+        <div>
+          <p class="name">Internet Explorer</p>
+          <p class="tag">@thefutureisnow</p>
+        </div>
+        <button class="follow_btn">Follow</button>
+      </li>
+      <button class="more_btn">Show more</button>
+    </ul>
+  </div>
+</div>
