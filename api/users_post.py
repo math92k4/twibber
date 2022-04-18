@@ -1,5 +1,4 @@
 from bottle import post, request, response
-import re
 import g
 import time
 import jwt
@@ -16,25 +15,25 @@ def _():
     user_first_name = request.forms.get("user_first_name")
     if not g.IS_VALID_NAME(user_first_name):
         response.status = 400
-        return {"error" : "user_first_name"}
+        return {"error_key" : "user_first_name"}
     
     # last name
     user_last_name = request.forms.get("user_last_name")
     if not g.IS_VALID_NAME(user_last_name):
         response.status = 400
-        return {"error" : "user_last_name"}
+        return {"error_key" : "user_last_name"}
     
     # email
     user_email = request.forms.get("user_email")
     if not g.IS_VALID_EMAIL(user_email):
         response.status = 400
-        return {"error" : "user_email"}
+        return { "error_key" : "user_email" }
 
     # password
     user_password = request.forms.get("user_password")
     if not g.IS_VALID_PASSWORD(user_password):
         response.status = 400
-        return {"error" : "user_password"}
+        return {"error_key" : "user_password"}
 
 
 
@@ -100,7 +99,7 @@ def _():
         # If email exist in db
         if "user_email" in str(ex):
             response.status = 400
-            return {"info" : "Email already registered" }
+            return { "error_key" : "user_email", "error_message" : "Email already registered" }
 
 
         response.status = 500

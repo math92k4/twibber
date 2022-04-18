@@ -1,47 +1,63 @@
 <div id="left">
   <ul>
+
+
     <li>
-      <a href="/home" class="logo">
-        <!--  -->
-        % include("assets/icons/logo.svg")
-        <!--  -->
+      % if session:
+      <a href="/home" onclick="spa('/home')" class="logo">
+      % else:
+      <a href="/" class="logo">
+      % end
+      % include("assets/icons/logo.svg")
       </a>
     </li>
+
+
+
+    % if session:
     <li>
-      <a href="/home" class="home current">
-        <!--  -->
+      <a href="/home" onclick="spa('/home')" class="home">
         % include("assets/icons/slim/home.svg")
-        <!--  -->
         % include("assets/icons/bold/home.svg")
         <p>Home</p>
       </a>
     </li>
+    % end
+    
+
+
     <li>
-      <a href="#">
+      <a href="/explore" onclick="spa('/explore')">
         % include("assets/icons/slim/hashtag.svg")
+        % include("assets/icons/bold/hashtag.svg")
         <p>Explore</p>
       </a>
     </li>
+
+
+
+    % if session:
     <li>
-      <a href="#">
+      <a href="#" onclick="return false">
         % include("assets/icons/slim/bell.svg")
         <p>Notifications</p>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="#" onclick="return false">
         % include("assets/icons/slim/message.svg")
         <p>Messages</p>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="/{{ session['user_tag'] }}" onclick="spa(`/{{ session['user_tag'] }}`)" class="profile">
         % include("assets/icons/slim/user.svg")
+        % include("assets/icons/bold/user.svg")
         <p>Profile</p>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="#" onclick="return false">
         % include("assets/icons/slim/dots.svg")
         <p>More</p>
       </a>
@@ -50,14 +66,22 @@
       % include("assets/icons/tweeb.svg") 
       <span>Tweeb</span>
     </button></li>
+    % end
   </ul>
 
+  % if session:
   <div class="user">
-    <div class="user_icon">M</div>
+    <div class="pop_up">
+      <div class="content">
+        <a href="/sign-out">Sign out</a>
+      </div>
+    </div>
+    <div class="user_icon">{{ session["user_tag"][0:1].capitalize() }}</div>
     <div class="user_info">
-      <p class="name">Mathias Jensen</p>
-      <p class="tag">@MathiasJensen</p>
+      <p class="name">{{ session["user_first_name"] }} {{ session["user_last_name"] }}</p>
+      <p class="tag">@{{ session["user_tag"] }}</p>
     </div>
     <span>···</span>
   </div>
+  % end
 </div>

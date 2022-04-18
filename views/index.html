@@ -11,21 +11,27 @@
 
 
 % if not is_xhr:
-  <main id="index_page" data-spa_url="/" data-spa_type="main" data-page_title="Welcome to Twibber">
+  <main id="index_page" 
+  data-spa_url="/" 
+  data-spa_type="main" 
+  data-spa_parent="body"
+  data-page_title="Twibber. This is where it happens / Twibber"
+  >
+
     <div class="left">
       <img src="/assets/images/bg.png" alt="Background image" />
       <div class="logo_left">
-        <!--  -->
+
         % include("assets/icons/logo.svg")
-        <!--  -->
+
       </div>
     </div>
     <section class="right">
       <div class="container">
         <div class="logo_right">
-          <!--  -->
+
           % include("assets/icons/logo.svg")
-          <!--  -->
+
         </div>
         <h1>Happening now</h1>
         <h2>Join Twibber today.</h2>

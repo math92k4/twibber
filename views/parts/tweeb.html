@@ -1,18 +1,40 @@
 <form class="tweeb">
   <input type="text" name="tweeb_id" hidden value="{{ tweeb['tweeb_id'] }}">
-  <div class="user_icon"></div>
+  <div class="user_icon" onclick="spa(`/{{ tweeb['user_tag'] }}`)">{{ tweeb["user_tag"][0:1].capitalize() }}</div>
   <div class="container">
     <div class="user_info">
-      <p class="name">{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}</p>
-      <p class="tag">@{{ tweeb["fk_user_id"] }}</p>
+      <input type="text" name="user_id" hidden value="{{ tweeb['user_id'] }}">
+
+      <p class="name" onclick="spa(`/{{ tweeb['user_tag'] }}`)" >{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}</p>
+      <p class="tag">@{{ tweeb["user_tag"] }}</p>
       <span>·</span>
       <p class="tweebed_ago">5m</p>
     </div>
     <p class="tweeb_text">{{ tweeb["tweeb_text"] }}</p>
+    % if tweeb["tweeb_image"]:
+      <img src="/assets/images/{{tweeb['tweeb_image']}}">
+    % end
     <div class="action_bar">
-      <button>
+
+    % if not session:
+      <button onclick="spa('/sign-up')">
         % include("assets/icons/heart.svg")
       </button>
+    % end
+
+    % if session:
+      <button onclick="return false">
+        % include("assets/icons/heart.svg")
+      </button>
+        % if session["user_id"] == tweeb["fk_user_id"]:
+        <button onclick="spa(`/update/{{ tweeb['tweeb_id'] }}`, 'body')">
+          % include("assets/icons/edit.svg")
+        </button>
+        <button onclick="deleteTweeb()">
+          % include("assets/icons/delete.svg")
+        </button>
+        % end
+      % end
     </div>
   </div>
 </form>

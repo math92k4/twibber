@@ -1,0 +1,62 @@
+<div 
+id="update_tweeb_modal" 
+class="modal" 
+data-spa_type="modal" 
+data-spa_url="/update/{{ tweeb['tweeb_id'] }}"
+data-spa_parent="body"
+data-spa_url_origin="/home"
+>
+
+  <div>
+
+    <div class="top">
+      <div class="x" onclick="closeSpaModal()">
+        % include("assets/icons/x.svg")
+      </div>
+    </div>
+
+    <form class="update_tweeb_form">
+        <input type="text" name="tweeb_id" value="{{ tweeb['tweeb_id'] }}" hidden>
+        <div class="user_icon">{{ tweeb["user_tag"][0:1].capitalize() }}</div>
+        <div class="container">
+          <label>
+            <textarea
+              oninput="validateTextArea()"
+              name="tweeb_text"
+              rows="1"
+              minlength="1"
+              maxlength="100"
+              required
+              placeholder="What's happening?"
+            >{{ tweeb["tweeb_text"] }}</textarea>
+            <div class="counter"><span>{{ len(tweeb["tweeb_text"]) }}</span>/100</div>
+          </label>
+
+          % if tweeb["tweeb_image"]:
+          <div class="image_container">
+              <input type="text" name="old_tweeb_image" value="{{ tweeb['tweeb_image'] }}">
+              <img src="/assets/images/{{ tweeb['tweeb_image'] }}">
+              <div class="x" onclick="removeTweebImage()">
+                % include("assets/icons/x.svg")
+              </div>
+          </div>
+          % end
+
+          <div class="action_bar">
+            <div>
+              <label>
+      
+                % include("assets/icons/add_image.svg")
+                
+                <input type="file" name="tweeb_image" onchange="loadTweebImage()" />
+              </label>
+            </div>
+            <button onclick="formValidation( updateTweeb )">Update</button>
+          </div>
+        </div>
+      </form>
+
+  </div>
+
+</div>
+  

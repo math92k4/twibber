@@ -18,7 +18,7 @@
     margin: 0.5rem;
     position: relative;
   }
-  & .x {
+  & .top .x {
     width: 2.2rem;
     height: 2.2rem;
     padding: 0.5rem;
@@ -53,10 +53,16 @@
   }
 }
 
-#compose_tweeb_modal {
+#compose_tweeb_modal, #update_tweeb_modal {
   & > * {
     position: absolute;
     top: 5vh;
+  }
+  & .container {
+    min-height: 185px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 
@@ -80,6 +86,43 @@
     position: absolute;
     top: 0.5rem;
   }
+
+  & label a {
+    font-size: 0.82rem;
+    margin-top: 0.2rem;
+  }
+  & input {
+    border: 1px solid $tint-dark;
+    border-radius: $input_radius;
+    place-self: end;
+    width: 100%;
+    padding: 1.7rem 0.5rem 0.5rem 0.5rem;
+    font-size: inherit;
+  }
+
+  & button {
+    color: white;
+    font-weight: 700;
+    padding: 0.8rem;
+    border-radius: $round_radius;
+    background: black;
+    margin-top: 2rem;
+    transition: box-shadow 0.3s;
+    box-shadow: $main-shadow;
+  }
+
+  & div > p {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  & a {
+    color: $blue;
+  }
+}
+
+// Form css logic
+form {
   & .placeholder {
     left: 0.5rem;
     font-size: 0.93rem;
@@ -94,13 +137,9 @@
     display: none;
     color: $placeholder;
   }
-  & input {
-    border: 1px solid $tint-dark;
-    border-radius: $input_radius;
-    place-self: end;
-    width: 100%;
-    padding: 1.7rem 0.5rem 0.5rem 0.5rem;
-    font-size: inherit;
+  & [name="user_first_name"],
+  & [name="user_last_name"] {
+    text-transform: capitalize;
   }
   & input:focus {
     outline: 2px solid $blue;
@@ -117,40 +156,31 @@
     transform: scale(0.81);
   }
   & input:invalid:not(:placeholder-shown):not(:focus),
-  &.error input:invalid:not(:focus) {
-    border: 1px solid red;
+  & .error_400 input:not(:focus) {
+    border: 1px solid $red;
   }
-  & .error_message {
-    display: none;
-    color: red;
+  & .error_message,
+  & .custom_error {
+    color: $red;
     font-size: 0.82rem;
     margin-top: 0.2rem;
   }
+  & .error_message,
+  .error_message.hide {
+    display: none;
+  }
   & input:invalid:not(:placeholder-shown):not(:focus) ~ .error_message,
-  &.error input:invalid ~ .error_message {
+  & .error_400 .error_message {
     display: block;
   }
-
   & .requirements {
     color: $placeholder;
     font-size: 0.82rem;
     margin-top: 0.3rem;
     max-width: 60ch;
   }
-  & input:invalid:not(:placeholder-shown):not(:focus) ~ .requirements,
-  &.error input:invalid ~ .requirements {
-    color: red;
-  }
-
-  & button {
-    color: white;
-    font-weight: 700;
-    padding: 0.8rem;
-    border-radius: $round_radius;
-    background: black;
-    margin-top: 2rem;
-    transition: box-shadow 0.3s;
-    box-shadow: $main-shadow;
+  & input:invalid:not(:placeholder-shown):not(:focus) ~ .requirements {
+    color: $red;
   }
   & button:hover,
   & button:focus {

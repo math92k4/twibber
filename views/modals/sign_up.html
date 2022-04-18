@@ -1,7 +1,15 @@
-<div id="sign_up_modal" class="modal" data-spa_type="modal" data-spa_url="/sign-up" data-spa_url_origin="/">
+<div 
+id="sign_up_modal" 
+class="modal" 
+data-spa_type="modal" 
+data-spa_url="/sign-up" 
+data-spa_parent="body"
+data-spa_url_origin="/"
+>
+
   <form id="sign_up_form">
     <div class="top">
-      <div class="x" onclick="closeSpaModal()">
+      <div class="x" onclick="closeSpaModal('/')">
 
         % include("assets/icons/x.svg")
 
@@ -15,32 +23,34 @@
     <div class="form_grid">
       <h2>Sign up</h2>
       <label>
-        <input name="user_first_name" type="text" minlength="2" maxlength="20" placeholder=" " required oninput="countInputLength()" />
+        <input name="user_first_name" type="text" minlength="2" maxlength="20" placeholder=" " pattern="[A-Za-z]+" required oninput="countInputLength()" />
         <div class="placeholder">First name</div>
         <div class="counter"><span>0</span>/20</div>
         <p class="error_message">Please enter a valid first name</p>
       </label>
 
       <label>
-        <input name="user_last_name" type="text" minlength="2" maxlength="20" placeholder=" " required oninput="countInputLength()" />
+        <input name="user_last_name" type="text" minlength="2" maxlength="20" placeholder=" " pattern="[A-Za-z]+" required oninput="countInputLength()" />
         <div class="placeholder">Last name</div>
         <div class="counter"><span>0</span>/20</div>
         <p class="error_message">Please enter a valid last name</p>
       </label>
 
       <label>
-        <input name="user_email" type="email" placeholder=" " required />
+        <input name="user_email" type="email" placeholder=" " maxlength="50" oninput="doesEmailExist(true)" pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))' required />
         <div class="placeholder">Email</div>
         <p class="error_message">Please enter a valid email</p>
       </label>
 
       <label>
-        <input name="user_password" type="password" placeholder=" " pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}" required />
+        <input name="user_password" type="password" placeholder=" " minlength="8" maxlength="30" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}" required />
         <div class="placeholder">Password</div>
         <p class="requirements">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.</p>
       </label>
 
-      <button onclick="formValidation()">Sign up</button>
+      <button onclick="formValidation( postUser )">Sign up</button>
+
+      <p>Already have an account? <a href="/sign-in">Sign in</a></p>
     </div>
   </form>
 </div>

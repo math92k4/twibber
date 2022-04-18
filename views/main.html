@@ -1,5 +1,5 @@
 % if not is_xhr:
-  % include("head", page_title = "Home")
+  % include("head")
 % end
 
 % ####### Modals
@@ -9,25 +9,109 @@
 % if not is_xhr:
 <main id="main_page">
   %include("parts/left")
-  <div id="center">
+  <div id="feed">
 % end
+
+
 
 
   % ####### Feed
 
-  <div id="feed" data-spa_url="{{ spa_url }}" data-spa_type="feed">
+
+
+
+  <div 
+  data-spa_url="{{ spa_url }}" 
+  data-spa_type="feed"
+  data-spa_parent="#feed"
+  data-page_title="{{ page_title }}"
+  >
+
+
     <header>
-      <h1>Home</h1>
+      <h1>{{ feed_title }}</h1>
     </header>
 
-    % include("parts/create_tweeb_form", rows = 1)
 
-    % for tweeb in tweebs:
-      % include("parts/tweeb", tweeb = tweeb)
+
+    % ########### COMPOSE TWEEB
+    % if "compose_tweet" in modules:
+      % include("parts/create_tweeb_form", rows = 1)
     % end
+
+
+
+    % ########### PROFILE SECTION
+    % if "profile_section" in modules:
+      <div class="profile_section">
+        <div class="cover">
+          % if user:
+          <div class="user_icon">
+            {{ user["user_tag"][0:1].capitalize() }}
+          % else:
+            <div class="user_icon e204">
+          % end
+          </div>
+        </div>
+        <div class="action_bar">
+
+          % if user and session:
+
+          <form>
+            <input type="text" name="user_id" value="{{user['user_id']}}" hidden>
+            % if not user["user_id"] == session["user_id"]:
+
+              % if is_following:
+                <button class="unfollow" onclick="deleteFollow()">Following</button>
+              % else:
+                <button onclick="postFollow()">Follow</button>
+              % end
+
+            % end
+          </form>
+
+          % end
+          
+        </div>
+
+        <div class="user_info">
+          % if user:
+            <h2>{{ user["user_first_name"] }} {{ user["user_last_name"] }}</h2>
+            <h3>@{{ user["user_tag"] }}</h3>
+          % else:
+            <h2>@{{ spa_url[1:] }}</h2>
+          % end
+        </div>
+
+      </div>
+
+      % if not user:
+        <div class="user_204">
+          <p>This account doesn't exist</p>
+          <p>Try search for another.</p>
+        </div>
+      % end
+
+    % end
+
+
+    <div class="tweebs">
+      % ########### TWEEBS
+      % for tweeb in tweebs:
+        % include("parts/tweeb", tweeb = tweeb)
+      % end
+    </div>
+
+
+
   </div>
   
+
+
+
   % ####### Feed end
+
+
 
 
 

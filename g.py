@@ -26,11 +26,14 @@ DB_CONFIG = {
 ##############################
 
 def GET_DECODED_JWT():
+    if not request.get_cookie("jwt"):
+        return False
     encoded_jwt = request.get_cookie("jwt")
     decoded_jwt = jwt.decode(encoded_jwt, JWT_SECRET, algorithms=["HS256"])
     return decoded_jwt
 
 ##############################
+# VALIDATION
 
 def IS_VALID_SESSION(is_xhr = False):
     # No jwt
@@ -51,10 +54,10 @@ def IS_VALID_SESSION(is_xhr = False):
         cursor = db.cursor()
         session = (decoded_jwt["session_id"], decoded_jwt["user_id"])
         cursor.execute("""SELECT * FROM sessions
-                        WHERE session_id = %s AND user_id = %s""", session)
+                        WHERE session_id = %s AND fk_user_id = %s""", session)
+
         if not cursor.fetchone():
-            if is_xhr:
-                return False
+            if is_xhr: return False
             return redirect("/sign-out")
         
         # Succes

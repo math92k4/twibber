@@ -1,12 +1,17 @@
 <div id="right">
+
+  % if session:
   <form>
     <label for="search">
       <input type="text" id="search" placeholder="Search Twibber" />
       % include("assets/icons/search.svg")
     </label>
   </form>
+  % end
 
   <div id="blocks">
+
+    % if not session:
     <!-- Sign up or sign in -->
     <div id="sign_up_or_in">
       <h2>New on Twibber?</h2>
@@ -15,7 +20,10 @@
       <button onclick="spa('/sign-in', 'body')">Sign in</button>
       <p>This is a school project. Please don't use your private email or usual password.</p>
     </div>
+    % end
 
+
+    % if session:
     <!-- Trends list -->
     <ul id="trends">
       <h2>Trends for you</h2>
@@ -81,5 +89,7 @@
       </li>
       <button class="more_btn">Show more</button>
     </ul>
+
+    % end
   </div>
 </div>
