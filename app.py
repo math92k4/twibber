@@ -1,4 +1,4 @@
-from bottle import run
+from bottle import run, default_app
 
 ##############################
 
