@@ -11,7 +11,7 @@ data-spa_url_origin="/home"
 
     <div class="top">
       <div class="x" onclick="closeSpaModal()">
-        % include("assets/icons/x.svg")
+        % include("icons/x.svg")
       </div>
     </div>
 
@@ -37,7 +37,7 @@ data-spa_url_origin="/home"
               <input type="text" name="old_tweeb_image" value="{{ tweeb['tweeb_image'] }}">
               <img src="/assets/images/{{ tweeb['tweeb_image'] }}">
               <div class="x" onclick="removeTweebImage()">
-                % include("assets/icons/x.svg")
+                % include("icons/x.svg")
               </div>
           </div>
           % end
@@ -46,7 +46,7 @@ data-spa_url_origin="/home"
             <div>
               <label>
       
-                % include("assets/icons/add_image.svg")
+                % include("icons/add_image.svg")
                 
                 <input type="file" name="tweeb_image" accept=".png, .jpg, .jpeg" onchange="loadTweebImage()" />
               </label>

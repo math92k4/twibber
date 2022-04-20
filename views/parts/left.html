@@ -8,7 +8,7 @@
       % else:
       <a href="/" class="logo">
       % end
-      % include("assets/icons/logo.svg")
+      % include("icons/logo.svg")
       </a>
     </li>
 
@@ -17,8 +17,8 @@
     % if session:
     <li>
       <a href="/home" onclick="spa('/home')" class="home">
-        % include("assets/icons/slim/home.svg")
-        % include("assets/icons/bold/home.svg")
+        % include("icons/slim/home.svg")
+        % include("icons/bold/home.svg")
         <p>Home</p>
       </a>
     </li>
@@ -28,8 +28,8 @@
 
     <li>
       <a href="/explore" onclick="spa('/explore')">
-        % include("assets/icons/slim/hashtag.svg")
-        % include("assets/icons/bold/hashtag.svg")
+        % include("icons/slim/hashtag.svg")
+        % include("icons/bold/hashtag.svg")
         <p>Explore</p>
       </a>
     </li>
@@ -39,31 +39,31 @@
     % if session:
     <li>
       <a href="#" onclick="return false">
-        % include("assets/icons/slim/bell.svg")
+        % include("icons/slim/bell.svg")
         <p>Notifications</p>
       </a>
     </li>
     <li>
       <a href="#" onclick="return false">
-        % include("assets/icons/slim/message.svg")
+        % include("icons/slim/message.svg")
         <p>Messages</p>
       </a>
     </li>
     <li>
       <a href="/{{ session['user_tag'] }}" onclick="spa(`/{{ session['user_tag'] }}`)" class="profile">
-        % include("assets/icons/slim/user.svg")
-        % include("assets/icons/bold/user.svg")
+        % include("icons/slim/user.svg")
+        % include("icons/bold/user.svg")
         <p>Profile</p>
       </a>
     </li>
     <li>
       <a href="#" onclick="return false">
-        % include("assets/icons/slim/dots.svg")
+        % include("icons/slim/dots.svg")
         <p>More</p>
       </a>
     </li>
     <li><button onclick="spa('/compose/tweeb', 'body')" >
-      % include("assets/icons/tweeb.svg") 
+      % include("icons/tweeb.svg") 
       <span>Tweeb</span>
     </button></li>
     % end

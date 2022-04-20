@@ -9,7 +9,7 @@
 
       <p class="name" onclick="spa(`/{{ tweeb['user_tag'] }}`)" >{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}
       % if tweeb["user_verified"]:
-          %include("assets/icons/verified.svg")
+          %include("icons/verified.svg")
       % end
       </p>
       <p class="tag">@{{ tweeb["user_tag"] }}</p>
@@ -24,20 +24,20 @@
 
     % if not session:
       <button onclick="spa('/sign-up')">
-        % include("assets/icons/heart.svg")
+        % include("icons/heart.svg")
       </button>
     % end
 
     % if session:
       <button onclick="return false">
-        % include("assets/icons/heart.svg")
+        % include("icons/heart.svg")
       </button>
         % if session["user_id"] == tweeb["fk_user_id"]:
         <button onclick="spa(`/update/{{ tweeb['tweeb_id'] }}`, 'body')">
-          % include("assets/icons/edit.svg")
+          % include("icons/edit.svg")
         </button>
         <button onclick="deleteTweeb()">
-          % include("assets/icons/delete.svg")
+          % include("icons/delete.svg")
         </button>
         % end
       % end
