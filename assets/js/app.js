@@ -309,7 +309,7 @@ async function postTweeb (form) {
     ONE("#feed .tweebs").insertAdjacentHTML("afterbegin", tweeb)
   }
 
-  // FINALLY reset the form
+  // SUCCES reset the form
   resetForm(form)
 
   // Remove image container if exists
@@ -322,6 +322,9 @@ async function postTweeb (form) {
     closeSpaModal()
   } 
 }
+
+
+
 
 
 
@@ -341,6 +344,8 @@ async function postUser (form) {
   // SUCCES go to /home
   window.location.href = "/home"
 }
+
+
 
 
 
@@ -364,6 +369,8 @@ async function postSession (form) {
 
 
 
+
+
 // POST FOLLOW
 async function postFollow() {
   event.preventDefault()
@@ -377,8 +384,8 @@ async function postFollow() {
 
   if (!conn.ok) {
     console.log(conn)
-    const error = await conn.text()
-    console.log(error)
+    const error = await conn.json()
+    if ( conn.status == 400 ) handleServerValidation(error, form)
     return
   }
 
@@ -387,6 +394,9 @@ async function postFollow() {
   btn.remove()
   form.insertAdjacentHTML("afterbegin", newBtn)
 }
+
+
+
 
 
 // DELETE FOLLOW
@@ -401,7 +411,8 @@ async function deleteFollow() {
   })
 
   if (!conn.ok) {
-    console.log(conn)
+    const error = await conn.json()
+    if ( conn.status == 400 ) handleServerValidation(error, form)
     return
   }
 
@@ -443,8 +454,7 @@ async function deleteTweeb () {
 
 
 // UPDATE TWEEB
-async function updateTweeb() {
-  const form = event.target.form
+async function updateTweeb(form) {
   const conn = await fetch("/tweebs", {
     method : "PUT",
     body : new FormData(form)
@@ -453,7 +463,7 @@ async function updateTweeb() {
   if (!conn.ok) {
     console.log(conn)
     const error = await conn.json()
-    console.log(error)
+    if ( conn.status == 400 ) handleServerValidation(error, form)
   }
 
   if (conn.status == 204) {

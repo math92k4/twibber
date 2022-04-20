@@ -2,9 +2,9 @@
   % include("head")
 % end
 
-% ####### Modals
-
-% ####### Modals end
+% if modal:
+  % include(modal)
+% end
 
 % if not is_xhr:
 <main id="main_page">
@@ -76,7 +76,11 @@
 
         <div class="user_info">
           % if user:
-            <h2>{{ user["user_first_name"] }} {{ user["user_last_name"] }}</h2>
+            <h2>{{ user["user_first_name"] }} {{ user["user_last_name"] }}
+              % if user["user_verified"]:
+                % include("assets/icons/verified.svg")
+              % end
+            </h2>
             <h3>@{{ user["user_tag"] }}</h3>
           % else:
             <h2>@{{ spa_url[1:] }}</h2>
@@ -110,7 +114,6 @@
 
 
   % ####### Feed end
-
 
 
 

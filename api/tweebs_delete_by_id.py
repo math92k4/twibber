@@ -47,7 +47,7 @@ def _(tweeb_id):
     except Exception as ex:
         print(ex)
         response.status = 500
-        return 
+        return "Server error"
 
     finally:
         return

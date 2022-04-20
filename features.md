@@ -42,13 +42,11 @@
 
 # A user must be able to:
 
-
-
 - Sign Up - DONE
 
 - Sign In / login - DONE
 
-# Logout - Simple page or SPA if you want to - DONE
+- Logout - Simple page or SPA if you want to - DONE
 
 - Use a session - DONE
 
@@ -58,7 +56,7 @@
 
 - Delete tweet -  DONE
 
-# Update tweet -  It is a SPA, the page should not reload
+- Update tweet -  DONE
 
 - Follow someone -  DONE
 
@@ -66,7 +64,7 @@
 
 # Choose 1 extra functionality
 
-# Optional - Send an email when the user creates an account (Sign up). 
+- Verification email when signing up - DONE
 
 - Upload image in system - DONE
 

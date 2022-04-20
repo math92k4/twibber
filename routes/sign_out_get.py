@@ -23,7 +23,7 @@ def _():
     except Exception as ex:
         print(ex)
         response.status = 500
-        return {"info" : "Server error"}
+        return "Server error"
 
     finally:
         cursor.close()

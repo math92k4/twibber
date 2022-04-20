@@ -24,6 +24,7 @@ def _(user_email):
     except Exception as ex:
         print(ex)
         response.status = 500
+        return "Server error"
 
     finally:
         db.close()

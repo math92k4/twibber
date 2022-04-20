@@ -48,7 +48,7 @@ data-spa_url_origin="/home"
       
                 % include("assets/icons/add_image.svg")
                 
-                <input type="file" name="tweeb_image" onchange="loadTweebImage()" />
+                <input type="file" name="tweeb_image" accept=".png, .jpg, .jpeg" onchange="loadTweebImage()" />
               </label>
             </div>
             <button onclick="formValidation( updateTweeb )">Update</button>

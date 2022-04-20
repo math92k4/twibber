@@ -43,7 +43,7 @@ def _():
             return "You already follow this users"
         print(str(ex))
         response.status = 500
-        return
+        return "Server error"
     
     finally:
         cursor.close()

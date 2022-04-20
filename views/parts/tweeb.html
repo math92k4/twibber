@@ -1,14 +1,20 @@
+% from g import CALC_TIME_AGO
+
 <form class="tweeb">
   <input type="text" name="tweeb_id" hidden value="{{ tweeb['tweeb_id'] }}">
   <div class="user_icon" onclick="spa(`/{{ tweeb['user_tag'] }}`)">{{ tweeb["user_tag"][0:1].capitalize() }}</div>
   <div class="container">
     <div class="user_info">
-      <input type="text" name="user_id" hidden value="{{ tweeb['user_id'] }}">
+      <input type="text" name="user_id" hidden value="{{ tweeb['fk_user_id'] }}">
 
-      <p class="name" onclick="spa(`/{{ tweeb['user_tag'] }}`)" >{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}</p>
+      <p class="name" onclick="spa(`/{{ tweeb['user_tag'] }}`)" >{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}
+      % if tweeb["user_verified"]:
+          %include("assets/icons/verified.svg")
+      % end
+      </p>
       <p class="tag">@{{ tweeb["user_tag"] }}</p>
       <span>·</span>
-      <p class="tweebed_ago">5m</p>
+      <p class="tweebed_ago">{{ CALC_TIME_AGO( tweeb["tweeb_created_at"] ) }}</p>
     </div>
     <p class="tweeb_text">{{ tweeb["tweeb_text"] }}</p>
     % if tweeb["tweeb_image"]:
