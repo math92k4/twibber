@@ -5,6 +5,7 @@ data-spa_type="modal"
 data-spa_url="/sign-in" 
 data-spa_parent="body"
 data-spa_url_origin="/"
+data-page_title="Sign in / Twibber"
 
 >
 
@@ -33,12 +34,12 @@ data-spa_url_origin="/"
         <input name="user_password" type="password" placeholder=" " pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}" required />
         <div class="placeholder">Password</div>
         <!-- <p class="requirements">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.</p> -->
-        <a href="#">Forgot password?</a>
+        <a href="#" onclick="return false">Forgot password?</a>
       </label>
 
       <button onclick="formValidation( postSession )">Sign in</button>
 
-      <p>Don't have an account? <a href="/sign-up">Sign up</a></p>
+      <p>Don't have an account? <a href="/sign-up" onclick="spa('/sign-up', 'body'); return false">Sign up</a></p>
     </div>
   </form>
 </div>

@@ -8,39 +8,45 @@
 # SEO-friendly single-page-app
 - Bridge between the front-page, main-page
 - Otherwise all URLs will be rendered dynimacally with url-update, page-title-update, and history-back-forth compability
-- Every url can also be rendered server-side
+- Every url (except /update/tweeb_id) can also be rendered server-side
 
 
 # URL-list
-- /                                 no-session only
-- /sign-up                          no-session only
-- /sign-in                          no-session only
+- /                    Front-page                           no-session only
+- /sign-up             Front-page + modal                   no-session only
+- /sign-in             Front-page + modal                   o-session only
 
-- /sign-out                         No content, only redirect
+- /sign-out            only redirect                        No content
 
-- /home                             session only
+- /home                Your tweebs + those you follow       session only
+- /compose/tweeb       /home + modal                        session only
+- /update/<tweeb_id>   /home + modal                        session only - if not ajax: redirect /home
 
-- /explore                          Open access
-- /<user_tag>                       Open acces
-- /<user_tag>/tweeb/<tweeb_id>      Open acces
+- /explore             All tweebs but your own              Open access
+- /<user_tag>          Tweebs by the user                   Open access
 
-- /admin                            Open acces - Rights to delete tweets and users
+# /admin               All tweebs                           Open acces
 
 
 # Features
-- Like Tweeb
-- Follow user
+- Sign up
+- Sign in
+- Verify account via email link
 - Create tweet
+- Like Tweeb
 - Upload image to tweeb
 - Update your own tweets
 - Delete your own tweets
+- Follow user
+- Unfollow user
 
 
 
 
 
 
-# A user must be able to:
+
+# REQUIREMENTS
 
 - Sign Up - DONE
 

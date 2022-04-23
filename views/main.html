@@ -34,9 +34,8 @@
 
 
 
-    % ########### COMPOSE TWEEB
     % if "compose_tweet" in modules:
-      % include("parts/create_tweeb_form", rows = 1)
+      % include("parts/compose_tweeb")
     % end
 
 
@@ -44,37 +43,46 @@
     % ########### PROFILE SECTION
     % if "profile_section" in modules:
       <div class="profile_section">
+
         <div class="cover">
           % if user:
+
           <div class="user_icon">
-            {{ user["user_tag"][0:1].capitalize() }}
+            % if user["user_icon_image"]:
+              <img src="/assets/images/{{ user['user_icon_image'] }}">
+            % else:
+              {{ user["user_tag"][0:1].capitalize() }}
+            % end
+
           % else:
             <div class="user_icon e204">
           % end
           </div>
         </div>
+
+
         <div class="action_bar">
 
           % if user and session:
+            <form>
+              <input type="text" name="user_id" value="{{user['user_id']}}" hidden>
+              % if not user["user_id"] == session["user_id"]:
 
-          <form>
-            <input type="text" name="user_id" value="{{user['user_id']}}" hidden>
-            % if not user["user_id"] == session["user_id"]:
+                % if is_following:
+                  <button class="unfollow" onclick="deleteFollow()">Following</button>
+                % else:
+                  <button onclick="postFollow()">Follow</button>
+                % end
 
-              % if is_following:
-                <button class="unfollow" onclick="deleteFollow()">Following</button>
-              % else:
-                <button onclick="postFollow()">Follow</button>
               % end
-
-            % end
-          </form>
-
+            </form>
           % end
           
         </div>
 
+
         <div class="user_info">
+
           % if user:
             <h2>{{ user["user_first_name"] }} {{ user["user_last_name"] }}
               % if user["user_verified"]:
@@ -82,10 +90,18 @@
               % end
             </h2>
             <h3>@{{ user["user_tag"] }}</h3>
+            <p class="member_since">Joined {{ user["user_created_at_date"] }}</p>
+            <div class="stats">
+              <p><span class="following">{{user["user_following"]}}</span> Following</p>
+              <p><span class="followers">{{user["user_followers"]}}</span> Followers</p>
+              <p><span class="tweebs_count">{{user["user_tweebs"]}}</span> Tweebs</p>
+            </div>
           % else:
             <h2>@{{ spa_url[1:] }}</h2>
           % end
+
         </div>
+
 
       </div>
 
@@ -103,6 +119,14 @@
       % ########### TWEEBS
       % for tweeb in tweebs:
         % include("parts/tweeb", tweeb = tweeb)
+      % end
+
+      % if spa_url == "/home":
+        <div id="welcome_block">
+          <h2>Welcome to twibber</h2>
+          <p>This is the best place to see what’s happening in your world. Find some people and topics to follow now.</p>
+          <button onclick="spa('/explore')">Let's go!</button>
+        </div>
       % end
     </div>
 

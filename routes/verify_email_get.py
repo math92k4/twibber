@@ -19,7 +19,8 @@ def _(verification_id):
         
         # GET verication row
         cursor.execute("""SELECT * FROM verifications
-                        WHERE verification_id = %s""", (verification_id,))
+                        WHERE verification_id = %s
+                        LIMIT 1""", (verification_id,))
         verification = cursor.fetchone()
         if not verification:
             response.status = 400
@@ -37,7 +38,8 @@ def _(verification_id):
 
     except Exception as ex:
         db.rollback()
-        print(ex)
+        print("#"*30)
+        print(str(ex))
         response.status = 500
         return "Server error"
     
@@ -45,5 +47,5 @@ def _(verification_id):
         cursor.close()
         db.close()
 
-
+    # SUCCES
     return redirect("/home")

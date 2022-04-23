@@ -2,14 +2,17 @@
 
 // Query-selectors
 function ONE(selector, element = document) {
-  return element.querySelector(`${selector}`)
+  return element.querySelector(selector)
 }
 function ALL(selector, element = document) {
   return element.querySelectorAll(`${selector}`)
 }
 
 
-
+// ##############################
+// ##############################
+// ##############################
+// INPUT LOGIC AND FRONT-END-VALIDATION
 
 // Input-field length counter
 function countInputLength(input = event.target) {
@@ -19,9 +22,7 @@ function countInputLength(input = event.target) {
   counter.textContent = inputLength
 }
 
-
-
-// Form validation
+// Form validation - checks validity according to HTML-attributes
 function formValidation(callback) {
   event.preventDefault()
   const form = event.target.form
@@ -31,9 +32,6 @@ function formValidation(callback) {
     callback(form)
   }
 }
-
-
-
 
 // Text area validation
 function validateTextArea() {
@@ -53,16 +51,14 @@ function resizeTextArea(textArea) {
 }
 
 
-
-
-// When uploading tweeb image
+// Upload tweeb image to DOM (pre-tweeb-post)
 function loadTweebImage() {
   const form = event.target.form
 
   // If change-event triggered by removing the img - return
   if (!event.target.value) return
 
-  // If an uploaded image already shown - remove
+  // If an uploaded image already shown - remove it
   if (ONE(".image_container", form)) ONE(".image_container", form).remove()
 
   // Create and insert new img
@@ -85,28 +81,26 @@ function removeTweebImage() {
 }
 
 
-
-
-// Is email in DB?
+// Is email in DB? - Email validation when signing up
 async function doesEmailExist() {
   const field = event.target
   const email = field.value
   const form = field.form
+  const emailRegex = /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/g
+
+  // If field not valid - stop executing
+  if (!email || !email.match(emailRegex)) return
 
   // Make field invalid untill the result is found
   field.setCustomValidity("Invalid")
 
-  // Don't throw error if field is empty
-  if (!email) {
-    return
-  }
-
   // Look for email in db 
-  const conn = await fetch(`/get-user-by-email/${email}`, {
+  const conn = await fetch(`/users/by-email/${email}`, {
     method : "GET",
   })
   if (!conn.ok) {
     console.log(conn)
+    return
   }
 
   // if exist
@@ -117,6 +111,7 @@ async function doesEmailExist() {
     }
     handleServerValidation(error, form)
 
+  // SUCCES
   }  else (field.setCustomValidity(""))
 }
 
@@ -124,8 +119,9 @@ async function doesEmailExist() {
 
 
 // #########################
+// #########################
+// #########################
 // SPA
-
 
 // SET INIT STATE
 let memoUrl = getUrlPath()
@@ -137,36 +133,20 @@ function getUrlPath() {
   const idxOfSlash = href.indexOf("/", 8)
   return href.substring(idxOfSlash)
 }
+// Set anchor for current page as "current" - if left-panel exist
+if (ONE("#left")) highligtCurrentAnchor(memoUrl)
 
-// Set anchor for current page as "current"
-if (ONE(`#left [href="${memoUrl}"]:not(.logo)`)) {
-  ONE(`#left [href="${memoUrl}"]:not(.logo)`).classList.add("current")
-}
 
-function highligtCurrentAnchor (spaUrl) {
-  if(ONE(`#left a.current`)) {
-    ONE(`#left a.current`).classList.remove("current")
-  }
-  if (ONE(`#left [href="${spaUrl}"]:not(.logo)`)) {
-    ONE(`#left [href="${spaUrl}"]:not(.logo)`).classList.add("current")
-  }
-}
+
 
 
 
 // MAIN SPA HANDLER
 async function spa(spaUrl, parent ="#feed", doPushState = true) {
-  // Prevent default for anchor tags
-  event.preventDefault()
 
   // Do nothing if requested url is same as current url
   if (spaUrl == memoUrl) {
     return
-  }
-
-  // Don't push state when popstate-event
-  if (doPushState) {
-    history.pushState({ spaUrl: spaUrl }, "", spaUrl)
   }
 
   const existingModule = ONE(`[data-spa_url="${spaUrl}"]`)
@@ -188,11 +168,23 @@ async function spa(spaUrl, parent ="#feed", doPushState = true) {
   }
 
   hidePrevSpaModules(spaUrl)
-  if (parent == "#feed") highligtCurrentAnchor(spaUrl)
+  if (ONE("#left")) highligtCurrentAnchor(spaUrl)
+
+  // Push new state (Not when pop-state)
+  if (doPushState) {
+    history.pushState({ spaUrl: spaUrl }, "", spaUrl)
+  }
+
+  // Change page-title
+  ONE("title").textContent = ONE(`[data-spa_url="${spaUrl}"]`).dataset.page_title
 
   // memorize url for popstate-events
   memoUrl = spaUrl
 }
+
+
+
+
 
 function hidePrevSpaModules(spaUrl) {
   const prevSpaModule = ONE(`[data-spa_url="${memoUrl}"]`)
@@ -212,6 +204,8 @@ function hidePrevSpaModules(spaUrl) {
 }
 
 
+
+// Fetch requested spaUrl
 async function getSpaModule(spaUrl) {
   const conn = await fetch(spaUrl, {
     method: "GET",
@@ -231,6 +225,61 @@ async function getSpaModule(spaUrl) {
   }
 }
 
+
+
+
+// Logic for highlighting the current anchor in navigation pane
+function highligtCurrentAnchor(spaUrl) {
+  const spaType = ONE(`[data-spa_url="${spaUrl}"]`).dataset.spa_type
+
+  if (spaType == "feed") {
+      // Remove previous .current
+      if(ONE(`#left a.current`)) {
+        ONE(`#left a.current`).classList.remove("current")
+      }
+      // Add new .current
+      if (ONE(`#left [href="${spaUrl}"]:not(.logo)`)) {
+      ONE(`#left [href="${spaUrl}"]:not(.logo)`).classList.add("current")
+    }
+  }
+
+  // If spaUrl is a modal & page-state is init - set .current on url_origin
+  if (spaType == "modal" && history.state.initPage) {
+    const originUrl = ONE(`[data-spa_url="${spaUrl}"]`).dataset.spa_url_origin
+    ONE(`#left [href="${originUrl}"]:not(.logo)`).classList.add("current")
+  }
+}
+
+
+
+
+// HISTORY BACK / FORWARD
+window.addEventListener("popstate", (event) => {
+  // Full page reload if prev elm doesnt exist
+  // This only happens if user deleted som HTML, or hits a bridge
+  if (!ONE(`[data-spa_url="${event.state.spaUrl}"]`))  {
+    location.reload()
+  }
+  const parent = ONE(`[data-spa_url="${event.state.spaUrl}"]`).dataset.spa_parent
+
+  spa(event.state.spaUrl, parent, false)
+})
+
+
+
+
+
+// Modal close btn
+function closeSpaModal() {
+  if (history.state.initPage) {
+    // If modal is first state, push its origin page
+    const url = ONE(`[data-spa_url="${memoUrl}"]`).dataset.spa_url_origin
+
+    spa(url, "body")
+  } else {
+    history.back()
+  }
+}
 
 
 
@@ -256,37 +305,13 @@ function resetForm (form) {
 
 
 
-// HISTORY BACK / FORWARD
-window.addEventListener("popstate", (event) => {
-  // Full page reload if prev elm doesnt exist
-  // This only happens if user deleted som HTML, or hits a bridge
-  if (!ONE(`[data-spa_url="${event.state.spaUrl}"]`))  {
-    location.reload()
-  }
-  const parent = ONE(`[data-spa_url="${event.state.spaUrl}"]`).dataset.spa_parent
-
-  spa(event.state.spaUrl, parent, false)
-})
-
-
-// Modal close btn
-function closeSpaModal() {
-  if (history.state.initPage) {
-    console.log(history.state.spaUrl)
-    console.log(memoUrl)
-    // If modal is first state, push its origin page
-    const url = ONE(`[data-spa_url="${memoUrl}"]`).dataset.spa_url_origin
-
-    spa(url, "body")
-  } else {
-    history.back()
-  }
-}
 
 
 
 // #########################
-// API calls
+// #########################
+// #########################
+// VIEW_API CALLS & HANDLE BACKEND VALIDATION
 
 
 // POST TWEEB
@@ -304,23 +329,36 @@ async function postTweeb (form) {
   }
 
   const tweeb = await conn.text()
-  const currentPage = ONE("a.current")
-  if (currentPage.classList.contains("home") || currentPage.classList.contains("profile")) {
-    ONE("#feed .tweebs").insertAdjacentHTML("afterbegin", tweeb)
+
+  // insert new tweeb - if current page is home or profile-page
+  const currentPage = ONE("#left .current")
+  // current page doent always exist
+  if (currentPage){
+    if (currentPage.classList.contains("home") || currentPage.classList.contains("profile")) {
+      ONE("#feed .tweebs").insertAdjacentHTML("afterbegin", tweeb)
+
+      // add 1 to tweebscount if exist
+      const tweebsCount = ONE(".stats .tweebs_count")
+      if (ONE(".stats .tweebs_count")){
+        tweebsCount.textContent = Number(tweebsCount.textContent) + 1
+      }
+
+    }
   }
 
-  // SUCCES reset the form
-  resetForm(form)
+
 
   // Remove image container if exists
   if (ONE(".image_container", form)) {
     ONE(".image_container", form).remove()
   }
-
-  // If posted via modal
+  
+  // If posted via modal - close it
   if (ONE(`[data-spa_url="${memoUrl}"]`).dataset.spa_type == "modal") {
     closeSpaModal()
   } 
+
+  resetForm(form)
 }
 
 
@@ -330,20 +368,25 @@ async function postTweeb (form) {
 
 // POST USER / sign up
 async function postUser (form) {
+  // Sending email is timeconsuming
+  // Disable button untill server respond
+  ONE("button", form).setCustomValidity("Waiting")
+
   const conn = await fetch("/users", {
     method : "POST",
     body : new FormData(form)
   })
 
   if (!conn.ok) {
+    ONE("button", form).setCustomValidity("")
     const error = await conn.json()
     if ( conn.status == 400 ) handleServerValidation(error, form)
     return
   }
-
   // SUCCES go to /home
   window.location.href = "/home"
 }
+
 
 
 
@@ -371,6 +414,7 @@ async function postSession (form) {
 
 
 
+
 // POST FOLLOW
 async function postFollow() {
   event.preventDefault()
@@ -390,6 +434,8 @@ async function postFollow() {
   }
 
   // SUCCES
+  const followers = ONE(".stats .followers")
+  followers.textContent = Number(followers.textContent) + 1
   const newBtn = "<button class='unfollow' onclick='deleteFollow()'>Following</button>"
   btn.remove()
   form.insertAdjacentHTML("afterbegin", newBtn)
@@ -417,6 +463,8 @@ async function deleteFollow() {
   }
 
   // SUCCES
+  const followers = ONE(".stats .followers")
+  followers.textContent = Number(followers.textContent) - 1
   const newBtn = "<button onclick='postFollow()'>Follow</button>"
   btn.remove()
   form.insertAdjacentHTML("afterbegin", newBtn)
@@ -445,6 +493,14 @@ async function deleteTweeb () {
   // Conn ok, but nothing were deleted
   if (conn.status == 204) return
 
+  const currentPage = ONE("#left .current")
+  if (currentPage){
+    if(currentPage.classList.contains("profile")) {
+      const tweebsCount = ONE(".stats .tweebs_count")
+      tweebsCount.textContent = Number(tweebsCount.textContent) - 1
+    }
+  }
+
   // Succes - remove the tweeb from DOM
   form.remove()
 }
@@ -455,6 +511,15 @@ async function deleteTweeb () {
 
 // UPDATE TWEEB
 async function updateTweeb(form) {
+  const tweebId = form.tweeb_id.value
+  const existingTweeb = ONE(`.tweeb [name='tweeb_id'][value='${tweebId}'] `).form
+
+  // If updated tweeb == existing tweeb - stop executing
+  if (ONE(".tweeb_text", existingTweeb).textContent == form.tweeb_text.value && ONE("[name='old_tweeb_image']", form)) {
+    closeSpaModal()
+    return
+  }
+
   const conn = await fetch("/tweebs", {
     method : "PUT",
     body : new FormData(form)
@@ -472,8 +537,7 @@ async function updateTweeb(form) {
   }
 
   const updatedTweeb = await conn.text()
-  const tweeb_id = form.tweeb_id.value
-  const tweeb = ONE(`.tweeb [value="${tweeb_id}"]`).form
+  const tweeb = ONE(`.tweeb [name='tweeb_id'][value="${tweebId}"]`).form
   tweeb.outerHTML = updatedTweeb
   closeSpaModal()
 }
@@ -491,6 +555,12 @@ function handleServerValidation(error, form) {
     location.href = error.error_url
   }
 
+  // Console log if info
+  if (error.info) {
+    console.log(error.info)
+    return
+  }
+
   const field = ONE(`[name="${error.error_key}"]`, form)
   const parent = field.parentElement
   parent.classList.add("error_400")
@@ -506,7 +576,6 @@ function handleServerValidation(error, form) {
     const customError = `<p class="custom_error" >${error.error_message}</p>`
     parent.insertAdjacentHTML("beforeend", customError)
   }
-
 
   field.addEventListener("input", rmCustomError)
 

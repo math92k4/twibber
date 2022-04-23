@@ -5,6 +5,7 @@ data-spa_type="modal"
 data-spa_url="/sign-up" 
 data-spa_parent="body"
 data-spa_url_origin="/"
+data-page_title="Sign up / Twibber"
 >
 
   <form id="sign_up_form">
@@ -50,7 +51,7 @@ data-spa_url_origin="/"
 
       <button onclick="formValidation( postUser )">Sign up</button>
 
-      <p>Already have an account? <a href="/sign-in">Sign in</a></p>
+      <p>Already have an account? <a href="/sign-in" onclick="spa('/sign-in', 'body')">Sign in</a></p>
     </div>
   </form>
 </div>

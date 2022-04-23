@@ -3,6 +3,7 @@ import pymysql
 import jwt
 import re
 import time
+import hidden
 
 import smtplib, ssl
 from email.mime.text import MIMEText
@@ -15,26 +16,32 @@ REGEX_EMAIL = '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[
 REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$"
 REGEX_NAME = '^[A-Za-z]{2,}$'
 REGEX_UUID4 = '^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+REGEX_SERIAL = '^[1-9][0-9]*$'
 
 # SECRETS
 JWT_SECRET = "THISkeyISIpossibleToGet123321123"
 
 # DB CONFIGURATION
-DB_CONFIG = {
-    "host" : "localhost",
-    "user" : "root",
-    "port" : 8889,
-    "password" : "root",
-    "database" : "twibber",
-    "cursorclass":pymysql.cursors.DictCursor
-}
+try:
+    import production
+    DB_CONFIG = hidden.DB_CONFIG
+
+except:
+    DB_CONFIG = {
+        "host" : "localhost",
+        "user" : "root",
+        "port" : 8889,
+        "password" : "root",
+        "database" : "twibber",
+        "cursorclass":pymysql.cursors.DictCursor
+    }
 
 ##############################
 
-def SEND_VERIFICATION_EMAIL(user, verification_id):
-    sender_email = "matkeatest@gmail.com"
-    receiver_email = user["user_email"]
-    password = "ASDasd123!"
+def SEND_VERIFICATION_EMAIL(user_email, verification_id):
+    sender_email = "twibberdibberdoo@gmail.com"
+    receiver_email = user_email
+    password = hidden.EMAIL_PASSWORD
     message = MIMEMultipart("alternative")
     message["Subject"] = "Welcome to Twibber"
     message["From"] = sender_email
@@ -74,10 +81,11 @@ def SEND_VERIFICATION_EMAIL(user, verification_id):
         try:
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, message.as_string())
-            return "yes, email sent"
+            print("#"*30)
+            print("Email sent")
         except Exception as ex:
-            print(ex)
-            return "uppps... could not send the email"
+            print("#"*30)
+            print(str(ex))
     
 
 ##############################
@@ -137,7 +145,8 @@ def IS_VALID_SESSION(is_xhr = False):
         cursor = db.cursor()
         session = (decoded_jwt["session_id"], decoded_jwt["user_id"])
         cursor.execute("""SELECT * FROM sessions
-                        WHERE session_id = %s AND fk_user_id = %s""", session)
+                        WHERE session_id = %s AND fk_user_id = %s
+                        LIMIT 1""", session)
 
         if not cursor.fetchone():
             if is_xhr: return False
@@ -147,7 +156,7 @@ def IS_VALID_SESSION(is_xhr = False):
         return True
     
     except Exception as ex:
-        print(ex)
+        print(str(ex))
         response.status = 500
         if is_xhr:
             return False
@@ -190,6 +199,15 @@ def IS_VALID_NAME(string):
     if len(string) > 20 or len(string) < 2:
         return False
     return True
+
+##############################
+
+def IS_VALID_SERIAL(string):
+    if not re.match(REGEX_SERIAL, string):
+        return False
+    return True
+
+
     
 
     

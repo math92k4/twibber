@@ -1,6 +1,7 @@
 from bottle import get, view, request, response, redirect
 import g
 import pymysql
+import json
 
 ##############################
 
@@ -13,7 +14,7 @@ def _(tweeb_id):
 
     if not g.IS_VALID_SESSION(True):
         response.status = 400
-        return { "error_url" : "/sign-out" }
+        return json.dumps({ "error_url" : "/sign-out" })
     
     session = g.GET_DECODED_JWT()
     user_id = session["user_id"]
@@ -25,7 +26,8 @@ def _(tweeb_id):
                         JOIN users
                         WHERE tweeb_id = %s
                         AND fk_user_id = user_id
-                        AND user_id = %s""", (tweeb_id, user_id))
+                        AND user_id = %s
+                        LIMIT 1""", (tweeb_id, user_id))
         tweeb = cursor.fetchone()
 
         if not tweeb:
@@ -35,7 +37,8 @@ def _(tweeb_id):
         return dict(tweeb = tweeb)
     
     except Exception as ex:
-        print(ex)
+        print("#"*30)
+        print(str(ex))
         response.status = 500
         return "Server error"
 

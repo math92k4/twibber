@@ -25,7 +25,7 @@ def _():
         cursor = db.cursor()
 
         # SELECTS all from accounts the user follows
-        cursor.execute("""SELECT tweeb_id, tweeb_text, tweeb_image, tweeb_created_at, tweeb_updated_at, fk_user_id, user_first_name, user_last_name, user_tag, user_verified
+        cursor.execute("""SELECT tweeb_id, tweeb_text, tweeb_image, tweeb_created_at, tweeb_updated_at, fk_user_id, user_first_name, user_last_name, user_tag, user_verified, user_icon_image
                         FROM tweebs
                         JOIN users
                         JOIN follows
@@ -33,14 +33,13 @@ def _():
                         AND follower_id = %s
                         AND user_id = following_id
                         UNION
-                        SELECT tweeb_id, tweeb_text, tweeb_image, tweeb_created_at, tweeb_updated_at, fk_user_id, user_first_name, user_last_name, user_tag, user_verified
+                        SELECT tweeb_id, tweeb_text, tweeb_image, tweeb_created_at, tweeb_updated_at, fk_user_id, user_first_name, user_last_name, user_tag, user_verified, user_icon_image
                         FROM tweebs
                         JOIN users
                         WHERE user_id = fk_user_id AND user_id = %s
-                        ORDER BY tweeb_created_at DESC""", (session["user_id"], session["user_id"]))
+                        ORDER BY tweeb_created_at DESC
+                        LIMIT 25""", (session["user_id"], session["user_id"]))
         tweebs = cursor.fetchall()
-        print("#"*30)
-        print(tweebs)
             
         return dict(
             is_xhr = is_xhr,
@@ -48,13 +47,14 @@ def _():
             feed_title = "Home",
             modules = {"compose_tweet"},
             page_title = "Compose tweeb",
-            modal = "modals/create_tweeb",
+            modal = "modals/compose_tweeb",
             session = session,
-            tweebs = {}
+            tweebs = tweebs
             )
 
     except Exception as ex:
-        print(ex)
+        print("#"*30)
+        print(str(ex))
         response.status = 500
         return "Server error"
 
@@ -65,8 +65,6 @@ def _():
 
 ##############################
 
-@view("modals/create_tweeb")
+@view("modals/compose_tweeb")
 def create_tweeb_as_module():
-    if not g.IS_VALID_SESSION(True):
-        return {"error_url" : "/sign-out"}
     return dict(session = g.GET_DECODED_JWT())

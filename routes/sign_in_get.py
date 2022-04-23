@@ -10,7 +10,7 @@ def _():
 
     if g.IS_VALID_SESSION():
         return redirect("/home")
-    return dict(is_xhr = is_xhr, modal = "modals/sign_in", page_title = "Sign-in")
+    return dict(is_xhr = is_xhr, modal = "modals/sign_in", page_title = "Sign in / Twibber")
 
 @view("modals/sign_in")
 def sign_in_as_module():

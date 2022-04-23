@@ -1,0 +1,35 @@
+% from g import CALC_TIME_AGO
+% for tweeb in tweebs:
+    <form class="tweeb">
+        <input type="text" name="tweeb_id" hidden value="{{ tweeb['tweeb_id'] }}">
+        <div class="user_icon" onclick="spa(`/{{ tweeb['user_tag'] }}`)">
+            % if tweeb["user_icon_image"]:
+            <img src="/assets/images/{{ tweeb['user_icon_image'] }}">
+            % else:
+            {{ tweeb["user_tag"][0:1].capitalize() }}
+            % end
+        </div>
+        <div class="container">
+            <div class="user_info">
+            <input type="text" name="user_id" hidden value="{{ tweeb['fk_user_id'] }}">
+            <p class="name" onclick="spa(`/{{ tweeb['user_tag'] }}`)" >{{ tweeb["user_first_name"] }} {{ tweeb["user_last_name"] }}
+            % if tweeb["user_verified"]:
+                %include("icons/verified.svg")
+            % end
+            </p>
+            <p class="tag">@{{ tweeb["user_tag"] }}</p>
+            <span>·</span>
+            <p class="tweebed_ago">{{ CALC_TIME_AGO( tweeb["tweeb_created_at"] ) }}</p>
+            </div>
+            <p class="tweeb_text">{{ tweeb["tweeb_text"] }}</p>
+            % if tweeb["tweeb_image"]:
+            <img src="/assets/images/{{tweeb['tweeb_image']}}">
+            % end
+            <div class="action_bar">
+                <button onclick="deleteTweeb(); return false">
+                    % include("icons/delete.svg")
+                </button>
+            </div>
+        </div>
+    </form>
+% end

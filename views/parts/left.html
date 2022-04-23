@@ -4,7 +4,7 @@
 
     <li>
       % if session:
-      <a href="/home" onclick="spa('/home')" class="logo">
+      <a href="/home" onclick="spa('/home'); return false" class="logo">
       % else:
       <a href="/" class="logo">
       % end
@@ -16,7 +16,7 @@
 
     % if session:
     <li>
-      <a href="/home" onclick="spa('/home')" class="home">
+      <a href="/home" onclick="spa('/home'); return false" class="home">
         % include("icons/slim/home.svg")
         % include("icons/bold/home.svg")
         <p>Home</p>
@@ -27,7 +27,7 @@
 
 
     <li>
-      <a href="/explore" onclick="spa('/explore')">
+      <a href="/explore" onclick="spa('/explore'); return false">
         % include("icons/slim/hashtag.svg")
         % include("icons/bold/hashtag.svg")
         <p>Explore</p>
@@ -50,7 +50,7 @@
       </a>
     </li>
     <li>
-      <a href="/{{ session['user_tag'] }}" onclick="spa(`/{{ session['user_tag'] }}`)" class="profile">
+      <a href="/{{ session['user_tag'] }}" onclick="spa(`/{{ session['user_tag'] }}`); return false" class="profile">
         % include("icons/slim/user.svg")
         % include("icons/bold/user.svg")
         <p>Profile</p>
@@ -76,7 +76,13 @@
         <a href="/sign-out">Sign out</a>
       </div>
     </div>
-    <div class="user_icon">{{ session["user_tag"][0:1].capitalize() }}</div>
+    <div class="user_icon">
+      % if session["user_icon_image"]:
+        <img src="/assets/images/{{ session['user_icon_image'] }}">
+      % else:
+        {{ session["user_tag"][0:1].capitalize() }}
+      % end
+    </div>
     <div class="user_info">
       <p class="name">{{ session["user_first_name"] }} {{ session["user_last_name"] }}</p>
       <p class="tag">@{{ session["user_tag"] }}</p>

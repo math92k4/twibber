@@ -7,3 +7,14 @@ body {
 .hide {
   display: none !important;
 }
+
+.user_icon.has_img {
+  background: none;
+}
+
+.user_icon img {
+  width: inherit;
+  height: inherit;
+  border-radius: 9999px!important;
+  border: inherit;
+}

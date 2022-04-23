@@ -2,7 +2,13 @@
 
 <form class="tweeb">
   <input type="text" name="tweeb_id" hidden value="{{ tweeb['tweeb_id'] }}">
-  <div class="user_icon" onclick="spa(`/{{ tweeb['user_tag'] }}`)">{{ tweeb["user_tag"][0:1].capitalize() }}</div>
+  <div class="user_icon" onclick="spa(`/{{ tweeb['user_tag'] }}`)">
+    % if tweeb["user_icon_image"]:
+      <img src="/assets/images/{{ tweeb['user_icon_image'] }}">
+    % else:
+      {{ tweeb["user_tag"][0:1].capitalize() }}
+    % end
+  </div>
   <div class="container">
     <div class="user_info">
       <input type="text" name="user_id" hidden value="{{ tweeb['fk_user_id'] }}">
@@ -33,10 +39,10 @@
         % include("icons/heart.svg")
       </button>
         % if session["user_id"] == tweeb["fk_user_id"]:
-        <button onclick="spa(`/update/{{ tweeb['tweeb_id'] }}`, 'body')">
+        <button onclick="spa(`/update/{{ tweeb['tweeb_id'] }}`, 'body'); return false">
           % include("icons/edit.svg")
         </button>
-        <button onclick="deleteTweeb()">
+        <button onclick="deleteTweeb(); return false">
           % include("icons/delete.svg")
         </button>
         % end

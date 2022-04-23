@@ -1,11 +1,17 @@
 <form class="create_tweeb_form">
-  <div class="user_icon">{{ session["user_tag"][0:1].capitalize() }}</div>
+  <div class="user_icon">
+    % if session["user_icon_image"]:
+      <img src="/assets/images/{{ session['user_icon_image'] }}">
+    % else:
+      {{ session["user_tag"][0:1].capitalize() }}
+    % end
+  </div>
   <div class="container">
     <label>
       <textarea
         oninput="validateTextArea()"
         name="tweeb_text"
-        rows="{{ rows }}"
+        rows="1"
         minlength="1"
         maxlength="100"
         required
